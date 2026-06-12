@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Link {
+  id          String   @id @default(uuid())
+  shortSlug   String   @unique
+  originalUrl String
+  expiresAt   DateTime? // Optional: for scheduled expirations
+  createdAt   DateTime @default(now())
+  clickCap    Int?
+  // This connects the Link table to our Analytics events
+  analytics   AnalyticsEvent[]
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(uuid())
+  linkId     String
+  timestamp  DateTime @default(now())
+  referrer   String   @default("Direct")
+  device     String   @default("Unknown")
+  isUnique   Boolean  @default(false)
+
+  // This sets up the relationship back to the Link row
+  link       Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+}
