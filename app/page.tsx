@@ -20,7 +20,7 @@ export default function HomePage() {
   const [showAdvanced, setShowAdvanced] = useState(false)
 
   const shortUrl = result
-    ? `${window.location.origin}/${result.shortSlug}`
+    ? `${typeof window !== "undefined" ? window.location.origin : ""}/${result.shortSlug}`
     : null
 
   async function handleSubmit() {
@@ -137,7 +137,7 @@ export default function HomePage() {
               </Label>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground whitespace-nowrap">
-                  {window.location.host}/
+                  {typeof window !== "undefined" ? window.location.host : ""}/
                 </span>
                 <Input
                   id="slug"
