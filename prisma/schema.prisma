@@ -13,24 +13,25 @@ datasource db {
 }
 
 model Link {
-  id          String   @id @default(uuid())
-  shortSlug   String   @unique
+  id          String    @id @default(uuid())
+  shortSlug   String    @unique
   originalUrl String
-  expiresAt   DateTime? // Optional: for scheduled expirations
-  createdAt   DateTime @default(now())
+  expiresAt   DateTime?
+  scheduledAt DateTime?
   clickCap    Int?
-  // This connects the Link table to our Analytics events
+  createdAt   DateTime  @default(now())
+
   analytics   AnalyticsEvent[]
 }
 
 model AnalyticsEvent {
-  id         String   @id @default(uuid())
-  linkId     String
-  timestamp  DateTime @default(now())
-  referrer   String   @default("Direct")
-  device     String   @default("Unknown")
-  isUnique   Boolean  @default(false)
+  id        String   @id @default(uuid())
+  linkId    String
+  timestamp DateTime @default(now())
+  referrer  String?  // ← nullable, not @default("Direct")
+  device    String?  // ← nullable, not @default("Unknown")
+  ipHash    String?
+  isUnique  Boolean  @default(false)
 
-  // This sets up the relationship back to the Link row
-  link       Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  link      Link     @relation(fields: [linkId], references: [id], onDelete: Cascade)
 }
