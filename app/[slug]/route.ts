@@ -71,26 +71,5 @@ export async function GET(
     }
 
     return NextResponse.redirect(link.originalUrl, { status: 307 })
-    // if (!isBot) {
-    //     // Unique = no prior event from this IP for this link in last 24h
-    //     prisma.analyticsEvent.findFirst({
-    //         where: {
-    //             linkId: link.id,
-    //             ipHash: ip, // we'll store a hashed IP
-    //             timestamp: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
-    //         },
-    //     }).then((existing) => {
-    //         prisma.analyticsEvent.create({
-    //             data: {
-    //                 linkId: link.id,
-    //                 referrer,
-    //                 device,
-    //                 ipHash: ip,
-    //                 isUnique: !existing,
-    //             },
-    //         }).catch(() => { })
-    //     }).catch(() => { })
-    // }
 
-    // return NextResponse.redirect(link.originalUrl, { status: 307 })
 }

@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../app/generated/prisma"; // Points to your Prisma 7 local output directory
+import { PrismaClient } from "../app/generated/prisma";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
@@ -9,7 +9,7 @@ let prismaInstance: PrismaClient;
 if (globalForPrisma.prisma) {
     prismaInstance = globalForPrisma.prisma;
 } else {
-    // 1. Create a native PostgreSQL connection pool using your pooled environment string
+    // 1. Create a native PostgreSQL connection pool 
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL
     });
