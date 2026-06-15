@@ -11,7 +11,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Link2, MousePointerClick, TrendingUp } from "lucide-react"
-
+export const dynamic = "force-dynamic"
 export default async function DashboardPage() {
     let links: any[] = []
 

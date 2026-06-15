@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link2, ArrowRight, Copy, Check, ExternalLink } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -18,7 +18,11 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const [showAdvanced, setShowAdvanced] = useState(false)
+  const [host, setHost] = useState("")
 
+  useEffect(() => {
+    setHost(window.location.host)
+  }, [])
   const shortUrl = result
     ? `${typeof window !== "undefined" ? window.location.origin : ""}/${result.shortSlug}`
     : null
@@ -137,7 +141,8 @@ export default function HomePage() {
               </Label>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground whitespace-nowrap">
-                  {typeof window !== "undefined" ? window.location.host : ""}/
+                  {host}/
+                  {/* {typeof window !== "undefined" ? window.location.host : ""}/ */}
                 </span>
                 <Input
                   id="slug"
